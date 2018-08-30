@@ -1,9 +1,8 @@
+# Create your views here.
 from django.contrib.auth.decorators import user_passes_test
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
-# Create your views here.
 from except_catcher.models import ExceptionReport
 
 @user_passes_test(lambda u: u.is_superuser)
@@ -49,7 +48,7 @@ def list_reports(request):
         }
     return render(request, 'except_catcher/list_report.html', data)
 
-#@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser)
 def test_exception(request):
     """ This is just to purposely throw an exception to test the system
     """

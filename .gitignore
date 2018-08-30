@@ -9,3 +9,6 @@ local.py
 *.sqlite3
 htmlcov/
 .coverage
+*.egg-info/
+build/
+dist/
