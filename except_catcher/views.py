@@ -22,7 +22,15 @@ def mark_resolved(request, pk):
     report = ExceptionReport.objects.get(pk=pk)
     report.resolved = not report.resolved
     report.save()
-    return redirect(reverse('view_error', kwargs={'pk': report.id}))
+    return redirect(reverse('view_error', kwargs={'pk': pk}))
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_error(request, pk):
+    """ Mark a particular exceptions as resolved
+    """
+    report = ExceptionReport.objects.get(pk=pk)
+    report.delete()
+    return redirect(reverse('list_reports'))
 
 @user_passes_test(lambda u: u.is_superuser)
 def resolve_all(request):

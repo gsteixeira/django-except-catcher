@@ -4,21 +4,25 @@
     <a href="{% url 'list_reports' %}">
         errors
     </a>
-    &nbsp;
+    &nbsp; &nbsp;
     <a href="{% url 'mark_resolved' report.id %}">
         mark resolved
     </a>
+    &nbsp; &nbsp;
+    <a href="{% url 'delete_error' report.id %}">
+        delete
+    </a>
 </p>
-{{ report.date_time }}
-{{ report.resolved }}
 <hr>
-{{ report.subject|linebreaks }}
+<p>{{ report.date_time }} {{ report.resolved }}</p>
+<hr>
+<p>{{ report.subject|linebreaks }}</p>
 <br>
-Similar errors:
+
+<p>Similar errors:</p>
 {% with report.get_similar as list_reports %}
     {% include 'except_catcher/list_report.html' %}
 {% endwith %}
-
 <hr>
 {% autoescape off %}
     {{ report.html_message }}

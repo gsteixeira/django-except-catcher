@@ -8,6 +8,7 @@
 <a href="{% url 'resolve_all' %}">
     resolve all
 </a>
+<hr>
 
 <p>
     errors count: {{ list_reports.count }}
@@ -19,6 +20,10 @@
     <li>
         <a href="{% url 'view_error' report.id %}">
             {{ report.date_time }} - {{ report.subject }} - {{ report.resolved }}
+        </a>
+        -
+        <a href="{% url 'delete_error' report.id %}">
+            delete
         </a>
     </li>
 {% endfor %}

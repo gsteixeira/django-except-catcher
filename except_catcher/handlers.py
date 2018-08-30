@@ -9,6 +9,7 @@ class CatchExceptionHandler(logging.Handler):
     """An exception log handler that saves Exceptions as ExceptionReport objects.
     If the request is passed as the first argument to the log record,
     request data will be provided in the report.
+    This was originaly taken from django.log.handlers.Admin.....
     """
 
     def __init__(self):
@@ -48,12 +49,12 @@ class CatchExceptionHandler(logging.Handler):
         message = "%s\n\n%s" % (self.format(no_exc_record), reporter.get_traceback_text())
         html_message = reporter.get_traceback_html()
         from except_catcher.models import ExceptionReport
-        report = ExceptionReport.objects.create(subject = subject,
-                                            message = message,
-                                            #dir_vars = str(dir()),
-                                            #local_vars = str(locals()),
-                                            #global_vars = str(globals()),
-                                            html_message = html_message)
+        report = ExceptionReport.objects.create(subject=subject,
+                                                message=message,
+                                                #dir_vars=str(dir()),
+                                                #local_vars=str(locals()),
+                                                #global_vars=str(globals()),
+                                                html_message=html_message)
 
     def format_subject(self, subject):
         """
