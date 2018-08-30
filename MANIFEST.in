@@ -1,0 +1,6 @@
+include LICENSE
+include README.rst
+recursive-include except_catcher/ *
+recursive-include except_catcher/static *
+recursive-include except_catcher/templates *
+recursive-include docs *

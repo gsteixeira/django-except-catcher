@@ -1,0 +1,11 @@
+*.pyc
+static_root/
+*kate-swp
+venv/
+media/
+logs/
+local.py
+*~
+*.sqlite3
+htmlcov/
+.coverage
