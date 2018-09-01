@@ -3,7 +3,6 @@
 django-except-catcher is a simple tool to catch and view exceptions in a production django website.
 
 ![django-except-catcher Logo](/except_catcher/static/except_catcher/logo.png)
-Format: ![django-except-catcher](url)
 
 Exceptions are stored and presented in a list where you can find similar exceptions and look their html representation just like in development django's debug.
 
@@ -20,13 +19,13 @@ Install django-except-catcher:
 
 ```shell
     pip install django-except-catcher
-
+```
 
 Add to urls.py:
 
 ```python
     url(r'^', include('except_catcher.urls')),
-
+```
 add to settings.py:
 
 ```python
@@ -51,18 +50,18 @@ add to settings.py:
             },
         }
     }
+```
 
 run migrations:
 ```shell
     ./manage.py migrate except_catcher
+```
 
 Now go to url:
-```shell
     http://localhost/errors/
 
 You can purposely throw an exception in the url:
 
-```shell
     http://localhost/test-exception/
 
 Only the super user can access these reports.
