@@ -53,11 +53,13 @@ add to settings.py:
 ```
 
 run migrations:
+
 ```shell
     ./manage.py migrate except_catcher
 ```
 
 Now go to url:
+
     http://localhost/errors/
 
 You can purposely throw an exception in the url:
@@ -69,5 +71,5 @@ Only the super user can access these reports.
 
 VERSIONS:
 -------------
--- v'0.0.2' - added some styling, better navigation, docs
--- v'0.0.1' - initial package
+* v'0.0.2' - added some styling, better navigation, docs
+* v'0.0.1' - initial package

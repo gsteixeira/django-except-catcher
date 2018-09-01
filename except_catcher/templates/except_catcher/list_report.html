@@ -3,9 +3,6 @@
 
 {% block content %}
     {% include 'except_catcher/list_report_header.html' %}
-    <p>
-        Exception count: {{ list_reports.count }}
-    </p>
     {% include 'except_catcher/report_list.html' %}
 
 {% endblock content %}
