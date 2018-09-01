@@ -1,29 +1,19 @@
+{% extends "except_catcher/base.html" %}
+{% load ecatcher %}
 
-  
-<p>
-    <a href="{% url 'list_reports' %}">
-        errors
-    </a>
-    &nbsp; &nbsp;
-    <a href="{% url 'mark_resolved' report.id %}">
-        mark resolved
-    </a>
-    &nbsp; &nbsp;
-    <a href="{% url 'delete_error' report.id %}">
-        delete
-    </a>
-</p>
-<hr>
-<p>{{ report.date_time }} {{ report.resolved }}</p>
-<hr>
-<p>{{ report.subject|linebreaks }}</p>
-<br>
 
-<p>Similar errors:</p>
-{% with report.get_similar as list_reports %}
-    {% include 'except_catcher/list_report.html' %}
-{% endwith %}
-<hr>
-{% autoescape off %}
-    {{ report.html_message }}
-{% endautoescape %}
+{% block content %}
+    {% include 'except_catcher/view_error_header.html' %}
+    <p>{{ report.date_time }} {{ report|is_solved }}</p>
+    <p>{{ report.subject|linebreaks }}</p>
+    {% with report.get_similar as list_reports %}
+        {% if list_reports %}
+            <p>Similar exceptions:</p>
+            {% include 'except_catcher/list_report.html' %}
+        {% endif %}
+    {% endwith %}
+    <hr>
+    {% autoescape off %}
+        {{ report.html_message }}
+    {% endautoescape %}
+{% endblock content %}

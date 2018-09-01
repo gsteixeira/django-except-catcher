@@ -1,0 +1,22 @@
+
+<div class="header-navbar">
+    <p>
+        <a href="{% url 'list_reports' %}">
+            errors
+        </a>
+        {% if not report.resolved %} 
+            &nbsp; &nbsp;
+            <a href="{% url 'mark_resolved' report.id %}">
+                mark resolved
+            </a>
+        {% else %}
+            &nbsp; &nbsp;
+            <span class="green">solved</span>
+        {% endif %}
+        &nbsp; &nbsp;
+        <a href="{% url 'delete_error' report.id %}">
+            delete
+        </a>
+    </p>
+</div>
+<hr>

@@ -17,11 +17,12 @@ class ExceptionReport(models.Model):
     date_time = models.DateTimeField(default=timezone.now)
     resolved = models.BooleanField(default=False)
 
+    class Meta():
+        ordering = ['-id']
+
     def __str__(self):
         return self.subject
     
     def get_similar(self):
-        subj_spl = self.subject.split(' ')[:-1]
-        subject = ' '.join(subj_spl)
-        errors = ExceptionReport.objects.exclude(pk=self.pk).filter(subject__contains=subject)
+        errors = ExceptionReport.objects.exclude(pk=self.pk).filter(subject__contains=self.subject)
         return errors
