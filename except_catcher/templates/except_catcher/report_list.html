@@ -1,0 +1,19 @@
+{% load ecatcher %}
+<ul>
+{% for report in list_reports %}
+    <li>
+        {{ report.date_time }} -
+        <a href="{% url 'view_error' report.id %}">
+            {{ report.subject }}
+        </a>
+        -
+        <a href="{% url 'mark_resolved' report.id %}">
+            {{ report|is_solved  }}
+        </a>
+        -
+        <a href="{% url 'delete_error' report.id %}">
+            delete
+        </a>
+    </li>
+{% endfor %}
+</ul>

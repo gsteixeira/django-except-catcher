@@ -65,5 +65,5 @@ Only the super user can access these reports.
 
 VERSIONS:
 -------------
--- v'0.0.2' - added some styling, docs
+-- v'0.0.2' - added some styling, better navigation, docs
 -- v'0.0.1' - initial package
