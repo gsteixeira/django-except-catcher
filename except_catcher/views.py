@@ -26,7 +26,7 @@ def mark_resolved(request, pk):
 
 @user_passes_test(lambda u: u.is_superuser)
 def delete_error(request, pk):
-    """ Mark a particular exceptions as resolved
+    """ Delete a particular exception report
     """
     report = ExceptionReport.objects.get(pk=pk)
     report.delete()

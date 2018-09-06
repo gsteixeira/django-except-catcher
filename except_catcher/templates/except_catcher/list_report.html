@@ -1,30 +1,8 @@
+{% extends "except_catcher/base.html" %}
+{% load ecatcher %}
 
-<a href="{% url 'list_reports' %}?all">
-    all
-</a>
-<a href="{% url 'list_reports' %}">
-    unresolved
-</a>
-<a href="{% url 'resolve_all' %}">
-    resolve all
-</a>
-<hr>
+{% block content %}
+    {% include 'except_catcher/list_report_header.html' %}
+    {% include 'except_catcher/report_list.html' %}
 
-<p>
-    errors count: {{ list_reports.count }}
-</p>
-
-
-<ul>
-{% for report in list_reports %}
-    <li>
-        <a href="{% url 'view_error' report.id %}">
-            {{ report.date_time }} - {{ report.subject }} - {{ report.resolved }}
-        </a>
-        -
-        <a href="{% url 'delete_error' report.id %}">
-            delete
-        </a>
-    </li>
-{% endfor %}
-</ul>
+{% endblock content %}
