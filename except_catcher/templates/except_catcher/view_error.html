@@ -13,7 +13,9 @@
         {% endif %}
     {% endwith %}
     <hr>
+    <div class="container-box">
     {% autoescape off %}
         {{ report.html_message }}
     {% endautoescape %}
+    </div>
 {% endblock content %}

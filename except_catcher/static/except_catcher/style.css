@@ -22,3 +22,12 @@
 .red {
     color: red;
 }
+
+.container-box {
+    max-width: 100vw; 
+    overflow: auto;
+    box-sizing: border-box;
+    
+    white-space: nowrap;
+    text-overflow: hidden;
+}
