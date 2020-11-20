@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from except_catcher.models import ExceptionReport
 
+
 @user_passes_test(lambda u: u.is_superuser)
 def view_error(request, pk):
     """ View details about an specific exception
@@ -64,3 +65,18 @@ def test_exception(request):
     zero = 0
     divide_by_zero = one / zero
     return redirect(reverse('list_reports'))
+
+@csrf_exempt
+def report_api(request):
+    """ This view receives a post with an exception report
+    """
+    if request.method == "POST":
+        remote_host = request.POST.get('host')
+        msg = request.POST.get('message')
+        message = ' - '.join([ host, msg ])
+        html_message = request.POST.get('html_message')
+        report = ExceptionReport.objects.create(subject=subject,
+                                                message=message,
+                                                html_message=html_message)
+        return HttpResponse('200')
+    return HttpResponse('400', status_code=400)
