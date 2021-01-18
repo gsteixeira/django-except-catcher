@@ -1,12 +1,12 @@
 
 <div class="header-navbar">
     <p>
-        <a href="{% url 'list_reports' %}">
+        <a href="{% url 'except_catcher:list_reports' %}">
             errors
         </a>
         {% if not report.resolved %} 
             &nbsp; &nbsp;
-            <a href="{% url 'mark_resolved' report.id %}">
+            <a href="{% url 'except_catcher:mark_resolved' report.id %}">
                 mark resolved
             </a>
         {% else %}
@@ -14,7 +14,7 @@
             <span class="green">solved</span>
         {% endif %}
         &nbsp; &nbsp;
-        <a href="{% url 'delete_error' report.id %}">
+        <a href="{% url 'except_catcher:delete_error' report.id %}">
             delete
         </a>
     </p>

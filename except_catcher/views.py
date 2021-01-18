@@ -23,7 +23,7 @@ def mark_resolved(request, pk):
     report = ExceptionReport.objects.get(pk=pk)
     report.resolved = not report.resolved
     report.save()
-    return redirect(reverse('view_error', kwargs={'pk': pk}))
+    return redirect(reverse('except_catcher:view_error', kwargs={'pk': pk}))
 
 @user_passes_test(lambda u: u.is_superuser)
 def delete_error(request, pk):
@@ -31,7 +31,7 @@ def delete_error(request, pk):
     """
     report = ExceptionReport.objects.get(pk=pk)
     report.delete()
-    return redirect(reverse('list_reports'))
+    return redirect(reverse('except_catcher:list_reports'))
 
 @user_passes_test(lambda u: u.is_superuser)
 def resolve_all(request):
@@ -42,7 +42,7 @@ def resolve_all(request):
         for rep in list_reports:
             rep.resolved = True
             rep.save()
-    return redirect(reverse('list_reports'))
+    return redirect(reverse('except_catcher:list_reports'))
 
 @user_passes_test(lambda u: u.is_superuser)
 def delete_all(request):
@@ -50,7 +50,7 @@ def delete_all(request):
     """
     list_reports = ExceptionReport.objects.all()
     list_reports.delete()
-    return redirect(reverse('list_reports'))
+    return redirect(reverse('except_catcher:list_reports'))
 
 @user_passes_test(lambda u: u.is_superuser)
 def list_reports(request):
@@ -72,7 +72,7 @@ def test_exception(request):
     one = 1
     zero = 0
     divide_by_zero = one / zero
-    return redirect(reverse('list_reports'))
+    return redirect(reverse('except_catcher:list_reports'))
 
 @csrf_exempt
 def report_api(request):

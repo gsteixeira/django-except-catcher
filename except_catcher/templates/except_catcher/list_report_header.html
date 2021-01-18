@@ -1,18 +1,18 @@
 
 <div class="header-navbar">
-    <a href="{% url 'list_reports' %}?all">
+    <a href="{% url 'except_catcher:list_reports' %}?all">
         all
     </a>
     &nbsp; &nbsp;
-    <a href="{% url 'list_reports' %}">
+    <a href="{% url 'except_catcher:list_reports' %}">
         unresolved
     </a>
     &nbsp; &nbsp;
-    <a href="{% url 'resolve_all' %}">
+    <a href="{% url 'except_catcher:resolve_all' %}">
         resolve all
     </a>
     &nbsp; &nbsp;
-    <a href="{% url 'delete_all' %}">
+    <a href="{% url 'except_catcher:delete_all' %}">
         delete all
     </a>
 </div>
