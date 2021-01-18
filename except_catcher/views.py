@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import user_passes_test
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.views.decorators.csrf import csrf_exempt
 from except_catcher.models import ExceptionReport
-
 
 @user_passes_test(lambda u: u.is_superuser)
 def view_error(request, pk):
@@ -42,6 +42,14 @@ def resolve_all(request):
         for rep in list_reports:
             rep.resolved = True
             rep.save()
+    return redirect(reverse('list_reports'))
+
+@user_passes_test(lambda u: u.is_superuser)
+def delete_all(request):
+    """ Mark all exceptions as resolved
+    """
+    list_reports = ExceptionReport.objects.all()
+    list_reports.delete()
     return redirect(reverse('list_reports'))
 
 @user_passes_test(lambda u: u.is_superuser)

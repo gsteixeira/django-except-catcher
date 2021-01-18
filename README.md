@@ -66,10 +66,5 @@ You can purposely throw an exception in the url:
 
     http://localhost/test-exception/
 
-Only the super user can access these reports.
+Only the superuser have access to these reports.
 
-
-VERSIONS:
--------------
-* v'0.0.2' - added some styling, better navigation, docs
-* v'0.0.1' - initial package

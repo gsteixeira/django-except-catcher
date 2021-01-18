@@ -4,14 +4,14 @@ from copy import copy
 from django.conf import settings
 from django.views.debug import ExceptionReporter
 
-
 class CatchExceptionHandler(logging.Handler):
-    """An exception log handler that saves Exceptions as ExceptionReport objects.
-    If the request is passed as the first argument to the log record,
-    request data will be provided in the report.
-    This was originaly taken from django.log.handlers.Admin.....
+    """ An exception log handler that saves Exceptions as ExceptionReport objects.
+    This class is to be set as error handler in settings.LOGGING. Please refer
+        to README.md for more details.
+    If the request is passed as the first argument to the log record, request
+        data will be provided in the report.
+    This was originaly adapted from django.log.handlers.Admin.
     """
-
     def __init__(self):
         super(CatchExceptionHandler, self).__init__()
 
@@ -51,9 +51,6 @@ class CatchExceptionHandler(logging.Handler):
         from except_catcher.models import ExceptionReport
         report = ExceptionReport.objects.create(subject=subject,
                                                 message=message,
-                                                #dir_vars=str(dir()),
-                                                #local_vars=str(locals()),
-                                                #global_vars=str(globals()),
                                                 html_message=html_message)
 
     def format_subject(self, subject):

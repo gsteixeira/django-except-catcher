@@ -8,12 +8,7 @@ from django.utils import timezone
 class ExceptionReport(models.Model):
     subject = models.CharField(max_length=256)
     message = models.TextField(null=True, blank=True)
-    # do not to store this coz its a waste, theres already everything in html
-    #dir_vars = models.TextField(null=True, blank=True)
-    #local_vars = models.TextField(null=True, blank=True)
-    #global_vars = models.TextField(null=True, blank=True)
     html_message = models.TextField(null=True, blank=True)
-
     date_time = models.DateTimeField(default=timezone.now)
     resolved = models.BooleanField(default=False)
 

@@ -16,6 +16,7 @@ urlpatterns = [
         url(r'^resolve-all/$', except_catcher.views.resolve_all, name='resolve_all'),
         url(r'^view-error/(?P<pk>\d+)/$', except_catcher.views.view_error, name='view_error'),
         url(r'^delete-error/(?P<pk>\d+)/$', except_catcher.views.delete_error, name='delete_error'),
+        url(r'^delete-all/$', except_catcher.views.delete_all, name='delete_all'),
         url(r'^mark-resolved/(?P<pk>\d+)/$', except_catcher.views.mark_resolved, name='mark_resolved'),
         url(r'^test-exception/$', except_catcher.views.test_exception, name='test_exception'),
     ]
