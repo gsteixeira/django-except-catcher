@@ -4,7 +4,7 @@ django-except-catcher is a simple tool to catch and view exceptions in a product
 
 ![django-except-catcher Logo](/except_catcher/static/except_catcher/logo.png)
 
-Exceptions are stored and listed so you can find similar errors and look their "yellow page", just like in django's debug error page.
+Exceptions are stored and listed so you can find similar errors and look their "yellow error page", just like in django's debug error page.
 
 It does not require instalation of any daemon in order to work, just install a regular django module.
 
@@ -68,3 +68,4 @@ You can purposely throw an exception in the url:
 
 Only the superuser have access to these reports.
 
+Sure the UI is ugly. That's ok since only sysadmins are supposed to see it anyway.
