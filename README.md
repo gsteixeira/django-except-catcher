@@ -10,7 +10,6 @@ It does not require instalation of any daemon in order to work, just install a r
 
 Inspired in django's AdminMailHandler.
 
-
 INSTALATION
 -------------
 
@@ -24,7 +23,7 @@ Install django-except-catcher:
 Add to urls.py:
 
 ```python
-    path('', include(('except_catcher.urls', 'except_catcher'), namespace="except_catcher")),
+    path('', include(('except_catcher.urls', 'except_catcher'), namespace="except_catcher"))
 ```
 add to settings.py:
 
