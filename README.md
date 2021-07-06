@@ -34,13 +34,13 @@ add to settings.py:
     ]
 
     LOGGING = {
-        ...
+        'version': 1,
         'handlers': {
                 'error_catcher': {
                 'level': 'ERROR',
                 'class': 'except_catcher.handlers.CatchExceptionHandler',
             },
-        ...
+        },
         'loggers': {
             'django.request': {
                 'handlers': [ 'error_catcher'],
@@ -49,6 +49,7 @@ add to settings.py:
             },
         }
     }
+
 ```
 
 run migrations:

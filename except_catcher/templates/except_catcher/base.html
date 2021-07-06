@@ -6,7 +6,16 @@
         <link rel="stylesheet" href="{{ STATIC_ROOT }}/except_catcher/style.css">
     </head>
     <body>
+        {% include 'except_catcher/list_report_header.html' %}
         {% block content %}
         {% endblock content %}
     </body>
 </html>
+<script>
+    function select_all() {
+        var elm_reports = document.getElementsByName('report_ids');
+        for (i=0; i<elm_reports.length; i++) {
+            elm_reports[i].checked = ! elm_reports[i].checked;
+        }
+    }
+</script>

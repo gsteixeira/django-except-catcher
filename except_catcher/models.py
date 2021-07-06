@@ -19,5 +19,6 @@ class ExceptionReport(models.Model):
         return self.subject
     
     def get_similar(self):
-        errors = ExceptionReport.objects.exclude(pk=self.pk).filter(subject__contains=self.subject)
+        errors = ExceptionReport.objects.exclude(pk=self.pk
+                    ).filter(subject__contains=self.subject)
         return errors

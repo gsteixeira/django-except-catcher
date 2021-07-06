@@ -1,4 +1,4 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from except_catcher.models import ExceptionReport
@@ -11,7 +11,7 @@ class ExceptCatcherTest(TestCase):
                                                    is_superuser=True)
 
     def _force_an_exception(self):
-        """ Check that page that some jr dev left a bug
+        """ Check that page where some dev left a bug
         """
         url = reverse('except_catcher:test_exception')
         client = Client()
@@ -46,3 +46,79 @@ class ExceptCatcherTest(TestCase):
             response = client.get(url)
             self.assertIn(test_url, str(response.content))
             self.assertEqual(response.status_code, 200)
+
+    def test_admin_views(self):
+        """ Check if sysadmin bob can view his error reports
+        """
+        self._force_an_exception()
+        client = Client()
+        client.force_login(self.bob)
+        report = ExceptionReport.objects.all().first()
+        urls = [
+            reverse('except_catcher:list_reports'),
+            reverse('except_catcher:view_error', kwargs={'pk': report.pk}),
+            ]
+        test_url = reverse('except_catcher:test_exception')
+        for url in urls:
+            response = client.get(url)
+            self.assertIn(test_url, str(response.content))
+            self.assertEqual(response.status_code, 200)
+
+    def test_update_reports_resolved(self):
+        for i in range(3):
+            self._force_an_exception()
+        reports = ExceptionReport.objects.all()
+        ini_count = reports.count()
+        client = Client()
+        client.force_login(self.bob)
+        data = {
+            'action': 'resolve',
+            'report_ids': reports.values_list('pk', flat=True),
+            }
+        url = reverse('except_catcher:update_reports')
+        response = client.post(url, data)
+        reports = ExceptionReport.objects.all()
+        for report in reports:
+            self.assertTrue(report.resolved)
+        self.assertEqual(reports.count(), ini_count)
+
+    def test_update_reports_unsolved(self):
+        for i in range(3):
+            self._force_an_exception()
+        reports = ExceptionReport.objects.all()
+        ini_count = reports.count()
+        client = Client()
+        client.force_login(self.bob)
+        data = {
+            'action': 'unsolve',
+            'report_ids': reports.values_list('pk', flat=True),
+            }
+        url = reverse('except_catcher:update_reports')
+        response = client.post(url, data)
+        reports = ExceptionReport.objects.all()
+        for report in reports:
+            self.assertFalse(report.resolved)
+        self.assertEqual(reports.count(), ini_count)
+
+    def test_update_reports_delete(self):
+        for i in range(3):
+            self._force_an_exception()
+        reports = ExceptionReport.objects.all()
+        ini_count = reports.count()
+        client = Client()
+        client.force_login(self.bob)
+        data = {
+            'action': 'delete',
+            'report_ids': reports.values_list('pk', flat=True),
+            }
+        url = reverse('except_catcher:update_reports')
+        response = client.post(url, data)
+        reports = ExceptionReport.objects.all()
+        self.assertEqual(reports.count(), 0)
+
+    def test_force_exception_denied(self):
+        """ Check if unauthorized users get a 404 """
+        url = reverse('except_catcher:test_exception')
+        client = Client()
+        response = client.get(url)
+        self.assertEqual(response.status_code, 403)

@@ -1,12 +1,24 @@
 # Create your views here.
 from django.contrib.auth.decorators import user_passes_test
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, Http404
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from except_catcher.models import ExceptionReport
 
-@user_passes_test(lambda u: u.is_superuser)
+def must_be_superuser(function):
+    """ Decorator that forces Super User only access. """
+    def wrap(request, *args, **kwargs):
+        if not request.user.is_superuser:
+            raise PermissionDenied()
+        return function(request, *args, **kwargs)
+    wrap.__doc__=function.__doc__
+    wrap.__name__=function.__name__
+    return wrap
+
+@must_be_superuser
 def view_error(request, pk):
     """ View details about an specific exception
     """
@@ -16,7 +28,7 @@ def view_error(request, pk):
         }
     return render(request, 'except_catcher/view_error.html', data)
 
-@user_passes_test(lambda u: u.is_superuser)
+@must_be_superuser
 def mark_resolved(request, pk):
     """ Mark a particular exceptions as resolved
     """
@@ -25,7 +37,7 @@ def mark_resolved(request, pk):
     report.save()
     return redirect(reverse('except_catcher:view_error', kwargs={'pk': pk}))
 
-@user_passes_test(lambda u: u.is_superuser)
+@must_be_superuser
 def delete_error(request, pk):
     """ Delete a particular exception report
     """
@@ -33,26 +45,24 @@ def delete_error(request, pk):
     report.delete()
     return redirect(reverse('except_catcher:list_reports'))
 
-@user_passes_test(lambda u: u.is_superuser)
-def resolve_all(request):
-    """ Mark all exceptions as resolved
+@must_be_superuser
+def update_reports(request):
+    """ Update status of multiple reports
     """
-    list_reports = ExceptionReport.objects.filter(resolved=False)
-    with transaction.atomic():
-        for rep in list_reports:
-            rep.resolved = True
-            rep.save()
-    return redirect(reverse('except_catcher:list_reports'))
+    if request.method == "POST":
+        ids = request.POST.getlist('report_ids')
+        action = request.POST.get('action')
+        reports = ExceptionReport.objects.filter(pk__in=ids)
+        if action == 'resolve':
+            reports.update(resolved=True)
+        elif action == 'unsolve':
+            reports.update(resolved=False)
+        elif action == 'delete':
+            reports.delete()
+    return redirect(request.POST.get('redirect',
+                                     reverse('except_catcher:list_reports')))
 
-@user_passes_test(lambda u: u.is_superuser)
-def delete_all(request):
-    """ Mark all exceptions as resolved
-    """
-    list_reports = ExceptionReport.objects.all()
-    list_reports.delete()
-    return redirect(reverse('except_catcher:list_reports'))
-
-@user_passes_test(lambda u: u.is_superuser)
+@must_be_superuser
 def list_reports(request):
     """ Lists all recorded exceptions
     """
@@ -65,7 +75,7 @@ def list_reports(request):
         }
     return render(request, 'except_catcher/list_report.html', data)
 
-@user_passes_test(lambda u: u.is_superuser)
+@must_be_superuser
 def test_exception(request):
     """ This is just to purposely throw an exception to test the system
     """
