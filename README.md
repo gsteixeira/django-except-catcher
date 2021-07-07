@@ -10,6 +10,10 @@ It does not require instalation of any daemon in order to work, just install a r
 
 Inspired in django's AdminMailHandler.
 
+For an example out of the box, take a look here:
+
+    https://github.com/gsteixeira/django-except-catcher-demo
+
 INSTALATION
 -------------
 
