@@ -1,6 +1,5 @@
 import logging
 from copy import copy
-
 from django.conf import settings
 from django.views.debug import ExceptionReporter
 
@@ -48,6 +47,7 @@ class CatchExceptionHandler(logging.Handler):
         reporter = ExceptionReporter(request, is_email=False, *exc_info)
         message = "%s\n\n%s" % (self.format(no_exc_record), reporter.get_traceback_text())
         html_message = reporter.get_traceback_html()
+        # need to load model here, because it's declared in settings
         from except_catcher.models import ExceptionReport
         report = ExceptionReport.objects.create(subject=subject,
                                                 message=message,

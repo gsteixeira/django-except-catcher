@@ -68,4 +68,4 @@ You can purposely throw an exception in the url:
 
 Only the superuser have access to these reports.
 
-Sure the UI is ugly. That's ok since only sysadmins are supposed to see it anyway.
+Sure, the UI is ugly.
