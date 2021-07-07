@@ -64,7 +64,8 @@ class ExceptCatcherTest(TestCase):
             self.assertIn(test_url, str(response.content))
             self.assertEqual(response.status_code, 200)
 
-    def test_update_reports_resolved(self):
+    def _test_update_reports(self, action):
+        """ Inner function to test the url 'except_catcher:update_reports' """
         for i in range(3):
             self._force_an_exception()
         reports = ExceptionReport.objects.all()
@@ -72,47 +73,33 @@ class ExceptCatcherTest(TestCase):
         client = Client()
         client.force_login(self.bob)
         data = {
-            'action': 'resolve',
+            'action': action,
             'report_ids': reports.values_list('pk', flat=True),
             }
         url = reverse('except_catcher:update_reports')
-        response = client.post(url, data)
+        response = client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        return ini_count
+
+    def test_update_reports_resolved(self):
+        """ Test 'Mark Resolved' """
+        ini_count = self._test_update_reports('resolve')
         reports = ExceptionReport.objects.all()
         for report in reports:
             self.assertTrue(report.resolved)
         self.assertEqual(reports.count(), ini_count)
 
     def test_update_reports_unsolved(self):
-        for i in range(3):
-            self._force_an_exception()
-        reports = ExceptionReport.objects.all()
-        ini_count = reports.count()
-        client = Client()
-        client.force_login(self.bob)
-        data = {
-            'action': 'unsolve',
-            'report_ids': reports.values_list('pk', flat=True),
-            }
-        url = reverse('except_catcher:update_reports')
-        response = client.post(url, data)
+        """ Test 'Mark Unsolved' """
+        ini_count = self._test_update_reports('unsolve')
         reports = ExceptionReport.objects.all()
         for report in reports:
             self.assertFalse(report.resolved)
         self.assertEqual(reports.count(), ini_count)
 
     def test_update_reports_delete(self):
-        for i in range(3):
-            self._force_an_exception()
-        reports = ExceptionReport.objects.all()
-        ini_count = reports.count()
-        client = Client()
-        client.force_login(self.bob)
-        data = {
-            'action': 'delete',
-            'report_ids': reports.values_list('pk', flat=True),
-            }
-        url = reverse('except_catcher:update_reports')
-        response = client.post(url, data)
+        """ Test deletion """
+        self._test_update_reports('delete')
         reports = ExceptionReport.objects.all()
         self.assertEqual(reports.count(), 0)
 
