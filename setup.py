@@ -8,13 +8,13 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-except-catcher',
-    version='0.1.2',
+    version='1.0.0',
     packages=find_packages(),
     include_package_data=True,
     license='GNU License',  # example license
     description='Catch Exceptions in production',
     long_description=README,
-    long_description_content_type='text/x-rst',
+    long_description_content_type='text/markdown',
     url='https://github.com/gsteixeira/django-except-catcher',
     author='Gustavo Selbach Teixeira',
     author_email='gsteixei@gmail.com',

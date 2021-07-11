@@ -108,4 +108,4 @@ class ExceptCatcherTest(TestCase):
         url = reverse('except_catcher:test_exception')
         client = Client()
         response = client.get(url)
-        self.assertEqual(response.status_code, 403)
+        self.assertIn(response.status_code, [404, 410])
