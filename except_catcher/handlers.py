@@ -15,6 +15,7 @@ class CatchExceptionHandler(logging.Handler):
         super(CatchExceptionHandler, self).__init__()
 
     def emit(self, record):
+        """ Handle the exceptions every 500 error page. """
         try:
             request = record.request
             subject = '%s (%s IP): %s' % (
@@ -33,7 +34,6 @@ class CatchExceptionHandler(logging.Handler):
             else:
                 request = None
         subject = self.format_subject(subject)
-
         # Since we add a nicely formatted traceback on our own, create a copy
         # of the log record without the exception data.
         no_exc_record = copy(record)
@@ -45,7 +45,8 @@ class CatchExceptionHandler(logging.Handler):
         else:
             exc_info = (None, record.getMessage(), None)
         reporter = ExceptionReporter(request, is_email=False, *exc_info)
-        message = "%s\n\n%s" % (self.format(no_exc_record), reporter.get_traceback_text())
+        message = "%s\n\n%s" % (self.format(no_exc_record),
+                                reporter.get_traceback_text())
         html_message = reporter.get_traceback_html()
         # need to load model here, because it's declared in settings
         from except_catcher.models import ExceptionReport

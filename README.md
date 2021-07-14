@@ -5,7 +5,7 @@ django-except-catcher is a simple tool to catch and store exceptions and _500 er
 
 ![django-except-catcher Logo](/except_catcher/static/except_catcher/logo.png)
 
-When a _500 error_ happens a record with details is stored in the database. 
+When a _500 error_ happens, a record with details is stored in the database. 
 
 Exceptions are stored and listed so you can find similar errors and look their "yellow error page", just like in django's debug mode.
 
