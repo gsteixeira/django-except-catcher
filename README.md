@@ -1,21 +1,22 @@
  DJANGO EXCEPT CATCHER
 ------------------------
 
-django-except-catcher is a simple tool to catch and view exceptions in a production django website.
+django-except-catcher is a simple tool to catch and store exceptions and _500 errors_ in a production django website.
 
 ![django-except-catcher Logo](/except_catcher/static/except_catcher/logo.png)
 
-Exceptions are stored and listed so you can find similar errors and look their "yellow error page", just like in django's debug error page.
+When a _500 error_ happens a record with details is stored in the database. 
+
+Exceptions are stored and listed so you can find similar errors and look their "yellow error page", just like in django's debug mode.
 
 It does not require instalation of any daemon in order to work, just install a regular django module.
 
-Inspired in django's AdminMailHandler.
+Inspired by django's AdminMailHandler.
 
 For an example out of the box, take a look [here](https://github.com/gsteixeira/django-except-catcher-demo).
 
 INSTALATION
 -------------
-
 
 Install django-except-catcher:
 
@@ -64,14 +65,14 @@ run migrations:
 
 ```
 
+You can purposely throw an exception in the url (must be superuser):
+
+    http://localhost:8000/test-exception/
+
 Now go to url:
 
     http://localhost:8000/errors/
 
-You can purposely throw an exception in the url:
-
-    http://localhost:8000/test-exception/
-
 Only the superuser have access to these reports.
 
-Sure, the UI is ugly.
+

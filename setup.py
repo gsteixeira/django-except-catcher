@@ -11,7 +11,7 @@ setup(
     version='1.0.0',
     packages=find_packages(),
     include_package_data=True,
-    license='GNU License',  # example license
+    license='GNU License',
     description='Catch Exceptions in production',
     long_description=README,
     long_description_content_type='text/markdown',
