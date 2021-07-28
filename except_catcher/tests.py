@@ -16,7 +16,6 @@ class ExceptCatcherTest(TestCase):
         url = reverse('except_catcher:test_exception')
         client = Client()
         client.force_login(self.bob)
-        #response = client.get(url)
         with self.assertRaises(ZeroDivisionError) as context:
             response = client.get(url)
 
@@ -29,23 +28,6 @@ class ExceptCatcherTest(TestCase):
         reports = ExceptionReport.objects.all()
         self.assertEqual(reports.count(), 1)
         self.assertIn('division by zero', str(reports.first().html_message))
-
-    def test_admin_views(self):
-        """ Check if sysadmin bob can view his error reports
-        """
-        self._force_an_exception()
-        client = Client()
-        client.force_login(self.bob)
-        report = ExceptionReport.objects.all().first()
-        urls = [
-            reverse('except_catcher:list_reports'),
-            reverse('except_catcher:view_error', kwargs={'pk': report.pk}),
-            ]
-        test_url = reverse('except_catcher:test_exception')
-        for url in urls:
-            response = client.get(url)
-            self.assertIn(test_url, str(response.content))
-            self.assertEqual(response.status_code, 200)
 
     def test_admin_views(self):
         """ Check if sysadmin bob can view his error reports
