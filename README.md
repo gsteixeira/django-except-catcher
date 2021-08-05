@@ -1,21 +1,21 @@
  DJANGO EXCEPT CATCHER
 ------------------------
 
-django-except-catcher is a simple tool to catch and store exceptions and _500 errors_ in a production django website.
+django-except-catcher is a simple tool to catch and store exceptions and _500 errors_ in production django applications.
 
 ![django-except-catcher Logo](/except_catcher/static/except_catcher/logo.png)
 
-When a _500 error_ happens, a record with details is stored in the database. 
+When a _500 error_ happens a record with the details is stored in the database.
 
 Exceptions are stored and listed so you can find similar errors and look their "yellow error page", just like in django's debug mode.
 
-It does not require instalation of any daemon in order to work, just install a regular django module.
+It doesn't require to run any daemon in order to work, just install a regular django module.
 
 Inspired by django's AdminMailHandler.
 
 For an example out of the box, take a look [here](https://github.com/gsteixeira/django-except-catcher-demo).
 
-INSTALATION
+INSTALLATION
 -------------
 
 Install django-except-catcher:
