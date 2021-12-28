@@ -1,5 +1,5 @@
 
-from django.conf.urls import url, include
+from django.conf.urls import include
 from django.urls import path
 from django.conf import settings
 import except_catcher
